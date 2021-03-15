@@ -2,11 +2,13 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 
 class Category extends Model
 {
+    use HasFactory;
     use CrudTrait;
 
     /*
@@ -16,10 +18,10 @@ class Category extends Model
     */
 
     protected $table = 'categories';
-    // protected $primaryKey = 'id';
-    // public $timestamps = false;
+    protected $primaryKey = 'id';
+    public $timestamps = true;
     protected $guarded = ['id'];
-    // protected $fillable = [];
+    protected $fillable = ['name', 'slug'];
     // protected $hidden = [];
     // protected $dates = [];
 

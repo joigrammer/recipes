@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Category;
+use App\Models\Ingredient;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -15,7 +17,10 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
         $this->call([
-            AllergenSeeder::class
+            UserSeeder::class,
+            AllergenSeeder::class                   
         ]);
+        Category::factory(8)->create(); 
+        $this->call(IngredientSeeder::class);
     }
 }

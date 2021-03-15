@@ -5,9 +5,11 @@ namespace App\Models;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Allergen;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Ingredient extends Model
 {
+    use HasFactory;
     use CrudTrait;
 
     /*

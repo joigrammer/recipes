@@ -27,8 +27,11 @@ class IngredientRequest extends FormRequest
      */
     public function rules()
     {
+        $name = $this->request->get('name');
         return [
-            'name' => 'required|unique:ingredients',
+            'name' => [
+                Rule::unique('ingredients')->ignore($name, 'name')
+            ],
             'category_id' => 'required|exists:categories,id',            
         ];
     }

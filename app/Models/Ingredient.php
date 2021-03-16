@@ -55,6 +55,12 @@ class Ingredient extends Model
     {
         return $this->belongsToMany(allergen::class);
     }
+
+    public function recipes()
+    {
+        return $this->belongsToMany(Recipe::class);
+    }
+    
     /*
     |--------------------------------------------------------------------------
     | SCOPES

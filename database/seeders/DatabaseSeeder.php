@@ -19,10 +19,14 @@ class DatabaseSeeder extends Seeder
         // \App\Models\User::factory(10)->create();
         $this->call([
             UserSeeder::class,
-            AllergenSeeder::class                   
+            AllergenSeeder::class,
+            MeasurementSeeder::class                   
         ]);
         Category::factory(8)->create(); 
         Tag::factory(40)->create(); 
-        $this->call(IngredientSeeder::class);
+        $this->call([
+            IngredientSeeder::class,
+            RecipeSeeder::class
+        ]);
     }
 }

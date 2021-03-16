@@ -4,14 +4,10 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Cviebrock\EloquentSluggable\Sluggable;
 
-class Tag extends Model
+class Measurement extends Model
 {
     use CrudTrait;
-    use HasFactory;
-    use Sluggable;
 
     /*
     |--------------------------------------------------------------------------
@@ -19,11 +15,11 @@ class Tag extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'tags';
-    protected $primaryKey = 'id';
-    public $timestamps = true;
+    protected $table = 'measurements';
+    // protected $primaryKey = 'id';
+    // public $timestamps = false;
     protected $guarded = ['id'];
-    protected $fillable = ['name', 'slug'];
+    // protected $fillable = [];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -32,24 +28,22 @@ class Tag extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    public function sluggable(): array
-    {
-        return [
-            'slug' => [
-                'source' => 'slug_or_name'
-            ]
-        ];
-    }
 
     /*
     |--------------------------------------------------------------------------
     | RELATIONS
     |--------------------------------------------------------------------------
     */
+    public function ingredients()
+    {
+        return $this->belongsToMany(Ingredient::class);
+    }
+
     public function recipes()
     {
-        return $this->belongsToMany(REcie::class);
+        return $this->belongsToMany(Recipe::class);
     }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

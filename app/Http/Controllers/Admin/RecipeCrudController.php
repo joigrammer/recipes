@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Requests\IngredientRequest;
+use App\Http\Requests\RecipeRequest;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
 
 /**
- * Class IngredientCrudController
+ * Class RecipeCrudController
  * @package App\Http\Controllers\Admin
  * @property-read \Backpack\CRUD\app\Library\CrudPanel\CrudPanel $crud
  */
-class IngredientCrudController extends CrudController
+class RecipeCrudController extends CrudController
 {
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
@@ -26,9 +26,9 @@ class IngredientCrudController extends CrudController
      */
     public function setup()
     {
-        CRUD::setModel(\App\Models\Ingredient::class);
-        CRUD::setRoute(config('backpack.base.route_prefix') . '/ingredient');
-        CRUD::setEntityNameStrings('ingredient', 'ingredients');
+        CRUD::setModel(\App\Models\Recipe::class);
+        CRUD::setRoute(config('backpack.base.route_prefix') . '/recipe');
+        CRUD::setEntityNameStrings('recipe', 'recipes');
     }
 
     /**
@@ -39,24 +39,8 @@ class IngredientCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        //CRUD::setFromDb(); // columns
-        CRUD::addColumn([
-            'name' => 'name',
-            'label' => 'Name'
-        ]);
+        CRUD::setFromDb(); // columns
 
-        //CRUD::addColumn(['name' => 'slug', 'label' => 'Slug']);
-
-        CRUD::addColumn([
-            'name' => 'category_id',
-            'label' => 'Category'
-        ]);
-
-        CRUD::addColumn([
-            'name' => 'allergens',
-            'label' => 'Allergens',
-            'type' => 'relationship'
-        ]);
         /**
          * Columns can be defined using the fluent syntax or array syntax:
          * - CRUD::column('price')->type('number');
@@ -72,41 +56,68 @@ class IngredientCrudController extends CrudController
      */
     protected function setupCreateOperation()
     {
-        CRUD::setValidation(IngredientRequest::class);
+        CRUD::setValidation(RecipeRequest::class);
 
         CRUD::addField([
             'name' => 'name',
             'type' => 'text'
         ]);
-        
+
         CRUD::addField([
             'name' => 'slug',
             'hint' => 'Will be automatically generated from name if left empty',            
         ]);
 
         CRUD::addField([
-            'type' => 'textarea',
-            'name' => 'description',
-            'label' => 'Description'
+            'name' => 'extract',
+            'type' => 'textarea',            
         ]);
 
-        CRUD::addField([
-            'type' => 'select2',
-            'name' => 'category_id',
-            'entity' => 'category'
-        ]);
-        
         CRUD::addField([
             'type' => 'select2_multiple',
-            'name' => 'allergens',
-            'entity' => 'allergens'
+            'name' => 'Tags',
+            'entity' => 'tags'
         ]);
 
-        /**
-         * Fields can be defined using the fluent syntax or array syntax:
-         * - CRUD::field('price')->type('number');
-         * - CRUD::addField(['name' => 'price', 'type' => 'number'])); 
-         */
+        CRUD::addField([
+            'name' => 'body',
+            'type' => 'ckeditor',            
+        ]);
+
+        CRUD::addField([
+            'name' => 'ingredients',
+            'type' => 'repeatable',   
+            'inline_create' => 'ingredients', 
+            'fields' => [
+                [
+                    'name' => 'qty',
+                    'type' => 'text',
+                    'label'   => '',
+                    'wrapper' => ['class' => 'form-group col-md-2'],
+                ],
+                [
+                    'name' => 'measurement_id',
+                    'type' => 'select',
+                    'label'   => '',
+                    'wrapper' => ['class' => 'form-group col-md-3'],
+                    'entity' => 'measurements'                    
+                ],
+                [
+                    'name' => 'ingredient_id',
+                    'type' => 'select2',
+                    'label'   => '',
+                    'wrapper' => ['class' => 'form-group col-md-4'],
+                    'entity' => 'ingredients'                    
+                ],
+                [
+                    'name' => 'annotation',
+                    'type' => 'text',
+                    'label'   => '',
+                    'wrapper' => ['class' => 'form-group col-md-3']                  
+                ]
+            ]     
+        ]);
+    
     }
 
     /**

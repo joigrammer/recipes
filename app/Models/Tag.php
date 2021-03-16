@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Cviebrock\EloquentSluggable\Sluggable;
 
-class Category extends Model
+class Tag extends Model
 {
-    use HasFactory;
     use CrudTrait;
+    use HasFactory;
     use Sluggable;
 
     /*
@@ -19,7 +19,7 @@ class Category extends Model
     |--------------------------------------------------------------------------
     */
 
-    protected $table = 'categories';
+    protected $table = 'tags';
     protected $primaryKey = 'id';
     public $timestamps = true;
     protected $guarded = ['id'];
@@ -46,10 +46,7 @@ class Category extends Model
     | RELATIONS
     |--------------------------------------------------------------------------
     */
-	public function ingredients()
-    {
-        return $this->hasMany(Ingredient::class, 'allergen_ingredient');
-    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

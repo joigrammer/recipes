@@ -4,9 +4,8 @@ namespace App\Http\Requests;
 
 use App\Http\Requests\Request;
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule;
 
-class IngredientRequest extends FormRequest
+class TagRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -26,14 +25,8 @@ class IngredientRequest extends FormRequest
      */
     public function rules()
     {
-        $name = $this->request->get('name');
         return [
-            'name' => [
-                'required',
-                'min:3', 'max:64',
-                Rule::unique('ingredients')->ignore($name, 'name')
-            ],
-            'category_id' => 'required|exists:categories,id',            
+            // 'name' => 'required|min:5|max:255'
         ];
     }
 

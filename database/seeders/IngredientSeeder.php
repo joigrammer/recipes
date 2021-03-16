@@ -16,7 +16,9 @@ class IngredientSeeder extends Seeder
     public function run()
     {
         Ingredient::factory(50)->create()->each(function ($ingredient){
-            $ingredient->allergens()->saveMany(Allergen::all());
+            $ingredient->allergens()->saveMany(
+                Allergen::inRandomOrder()->limit(rand(1,5))->get()
+            );
         });
         
     }

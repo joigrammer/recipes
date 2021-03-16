@@ -6,11 +6,13 @@ use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Allergen;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Cviebrock\EloquentSluggable\Sluggable;
 
 class Ingredient extends Model
 {
     use HasFactory;
     use CrudTrait;
+    use Sluggable;
 
     /*
     |--------------------------------------------------------------------------
@@ -22,7 +24,7 @@ class Ingredient extends Model
     protected $primaryKey = 'id';
     public $timestamps = true;
     protected $guarded = ['id'];
-    // protected $fillable = [];
+    protected $fillable = ['name', 'description', 'category_id'];
     // protected $hidden = [];
     // protected $dates = [];
 
@@ -31,7 +33,14 @@ class Ingredient extends Model
     | FUNCTIONS
     |--------------------------------------------------------------------------
     */
-    
+    public function sluggable(): array
+    {
+        return [
+            'slug' => [
+                'source' => 'slug_or_name'
+            ]
+        ];
+    }
     /*
     |--------------------------------------------------------------------------
     | RELATIONS

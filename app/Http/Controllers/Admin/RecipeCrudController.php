@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Requests\RecipeRequest;
+use App\Models\Recipe;
 use Backpack\CRUD\app\Http\Controllers\CrudController;
 use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
+
 
 /**
  * Class RecipeCrudController
@@ -13,12 +15,32 @@ use Backpack\CRUD\app\Library\CrudPanel\CrudPanelFacade as CRUD;
  */
 class RecipeCrudController extends CrudController
 {
+    use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation { store as traitStore; }
     use \Backpack\CRUD\app\Http\Controllers\Operations\ListOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-
+    
+    /*
+    public function store()
+    {   
+        $data = $this->crud->getRequest()->request->all();
+        $recipe = Recipe::create($data);
+        $tags = $data['tags'];
+        if(count($tags) != 0){
+            $recipe->tags()->attach($tags);
+        }
+        $fieldGroups = json_decode($data['ingredients'], true);
+        if(count($fieldGroups) != 0){
+            $recipe->ingredients()->attach($fieldGroups);
+        }
+        
+        \Alert::success(trans('backpack::crud.create_success'))->flash();
+        return redirect()->route('recipe.index');
+    }
+    */
+    
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
      * 
@@ -75,19 +97,18 @@ class RecipeCrudController extends CrudController
 
         CRUD::addField([
             'type' => 'select2_multiple',
-            'name' => 'Tags',
+            'name' => 'tags',
             'entity' => 'tags'
         ]);
-
+            
         CRUD::addField([
             'name' => 'body',
             'type' => 'ckeditor',            
         ]);
-
+        
         CRUD::addField([
-            'name' => 'ingredients',
-            'type' => 'repeatable',   
-            'inline_create' => 'ingredients', 
+            'name' => 'recipe.ingredients',
+            'type' => 'repeatable',
             'fields' => [
                 [
                     'name' => 'qty',
@@ -115,7 +136,8 @@ class RecipeCrudController extends CrudController
                     'label'   => '',
                     'wrapper' => ['class' => 'form-group col-md-3']                  
                 ]
-            ]     
+            ],
+            'init_rows' => 1
         ]);
     
     }

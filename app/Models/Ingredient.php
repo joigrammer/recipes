@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Backpack\CRUD\app\Models\Traits\CrudTrait;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Allergen;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Cviebrock\EloquentSluggable\Sluggable;
 
@@ -53,14 +52,19 @@ class Ingredient extends Model
     
     public function allergens()
     {
-        return $this->belongsToMany(allergen::class);
+        return $this->belongsToMany(Allergen::class);
     }
 
     public function recipes()
     {
-        return $this->belongsToMany(Recipe::class);
+        return $this->belongsToMany(Recipe::class, 'ingredient_measurement_recipe')->withPivot('qty', 'annotation', 'measurement_id');
     }
     
+    public function measurements()
+    {
+        return $this->belongsToMany(Measurement::class, 'ingredient_measurement_recipe')->withPivot('qty', 'annotation', 'recipe_id');
+    }
+
     /*
     |--------------------------------------------------------------------------
     | SCOPES

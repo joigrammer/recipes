@@ -23,7 +23,6 @@ class CreateIngredientMeasurementRecipeTable extends Migration
             $table->foreign('recipe_id')->references('id')->on('recipes')->onDelete('cascade')->onUpdate('cascade');
             $table->unsignedBigInteger('measurement_id');
             $table->foreign('measurement_id')->references('id')->on('measurements')->onDelete('cascade')->onUpdate('cascade');
-            $table->timestamps();
         });
     }
 

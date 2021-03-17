@@ -39,13 +39,12 @@ class IngredientCrudController extends CrudController
      */
     protected function setupListOperation()
     {
-        //CRUD::setFromDb(); // columns
+        $this->crud->enableExportButtons();
+        
         CRUD::addColumn([
             'name' => 'name',
             'label' => 'Name'
         ]);
-
-        //CRUD::addColumn(['name' => 'slug', 'label' => 'Slug']);
 
         CRUD::addColumn([
             'name' => 'category_id',
@@ -57,11 +56,6 @@ class IngredientCrudController extends CrudController
             'label' => 'Allergens',
             'type' => 'relationship'
         ]);
-        /**
-         * Columns can be defined using the fluent syntax or array syntax:
-         * - CRUD::column('price')->type('number');
-         * - CRUD::addColumn(['name' => 'price', 'type' => 'number']); 
-         */
     }
 
     /**

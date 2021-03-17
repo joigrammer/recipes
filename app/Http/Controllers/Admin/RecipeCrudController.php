@@ -20,26 +20,7 @@ class RecipeCrudController extends CrudController
     use \Backpack\CRUD\app\Http\Controllers\Operations\CreateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\UpdateOperation;
     use \Backpack\CRUD\app\Http\Controllers\Operations\DeleteOperation;
-    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;
-    
-    /*
-    public function store()
-    {   
-        $data = $this->crud->getRequest()->request->all();
-        $recipe = Recipe::create($data);
-        $tags = $data['tags'];
-        if(count($tags) != 0){
-            $recipe->tags()->attach($tags);
-        }
-        $fieldGroups = json_decode($data['ingredients'], true);
-        if(count($fieldGroups) != 0){
-            $recipe->ingredients()->attach($fieldGroups);
-        }
-        
-        \Alert::success(trans('backpack::crud.create_success'))->flash();
-        return redirect()->route('recipe.index');
-    }
-    */
+    use \Backpack\CRUD\app\Http\Controllers\Operations\ShowOperation;  
     
     /**
      * Configure the CrudPanel object. Apply settings to all operations.
@@ -94,52 +75,23 @@ class RecipeCrudController extends CrudController
             'name' => 'extract',
             'type' => 'textarea',            
         ]);
-
+        
         CRUD::addField([
             'type' => 'select2_multiple',
             'name' => 'tags',
             'entity' => 'tags'
-        ]);
-            
+        ]);       
+                
         CRUD::addField([
             'name' => 'body',
             'type' => 'ckeditor',            
         ]);
         
         CRUD::addField([
-            'name' => 'recipe.ingredients',
-            'type' => 'repeatable',
-            'fields' => [
-                [
-                    'name' => 'qty',
-                    'type' => 'text',
-                    'label'   => '',
-                    'wrapper' => ['class' => 'form-group col-md-2'],
-                ],
-                [
-                    'name' => 'measurement_id',
-                    'type' => 'select',
-                    'label'   => '',
-                    'wrapper' => ['class' => 'form-group col-md-3'],
-                    'entity' => 'measurements'                    
-                ],
-                [
-                    'name' => 'ingredient_id',
-                    'type' => 'select2',
-                    'label'   => '',
-                    'wrapper' => ['class' => 'form-group col-md-4'],
-                    'entity' => 'ingredients'                    
-                ],
-                [
-                    'name' => 'annotation',
-                    'type' => 'text',
-                    'label'   => '',
-                    'wrapper' => ['class' => 'form-group col-md-3']                  
-                ]
-            ],
-            'init_rows' => 1
-        ]);
-    
+            'type' => 'select2_multiple',
+            'name' => 'ingredients',
+            'entity' => 'ingredients'
+        ]);   
     }
 
     /**

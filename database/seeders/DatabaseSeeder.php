@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call([
             UserSeeder::class,
             AllergenSeeder::class,
-            MeasurementSeeder::class                   
+            //MeasurementSeeder::class                   
         ]);
         Category::factory(8)->create(); 
         Tag::factory(40)->create(); 

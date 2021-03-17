@@ -60,12 +60,7 @@ class Recipe extends Model
 
     public function ingredients()
     {
-        return $this->belongsToMany(Ingredient::class, 'ingredient_measurement_recipe')->withPivot('qty', 'annotation', 'measurement_id');
-    }
-
-    public function measurements()
-    {
-        return $this->belongsToMany(Measurement::class, 'ingredient_measurement_recipe')->withPivot('qty', 'annotation', 'ingredient_id');
+        return $this->belongsToMany(Ingredient::class);
     }
 
     /*
